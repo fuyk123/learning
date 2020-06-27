@@ -10,7 +10,7 @@ public class MainController {
      * @return
      */
     @GetMapping("/hello")
-    public String index() {
+    public String sayHello() {
         return "Hello, SpringBoot!";
     }
 
