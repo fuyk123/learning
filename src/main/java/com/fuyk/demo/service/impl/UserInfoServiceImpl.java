@@ -1,5 +1,7 @@
 package com.fuyk.demo.service.impl;
 
+import com.fuyk.demo.pojo.web.req.AddUserInfoReq;
+import com.fuyk.demo.pojo.web.rsp.BaseResultRsp;
 import com.fuyk.demo.pojo.web.rsp.UserInfoRsp;
 import com.fuyk.demo.service.UserInfoService;
 import com.fuyk.demo.sqlservice.dao.UserMapper;
@@ -53,5 +55,16 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .isLocal((userList.get(0).getLocal() ==1?true:false))
                 .build();
         return userInfoRsp;
+    }
+
+    @Override
+    public BaseResultRsp addUserInfo(AddUserInfoReq addUserInfoReq){
+        BaseResultRsp baseResultRsp = new BaseResultRsp();
+        User user = new User();
+        user.setUserName(addUserInfoReq.getUserName());
+        user.setSex(addUserInfoReq.getSex());
+        user.setLocal(addUserInfoReq.getLocal());
+        baseResultRsp.setErrmsg(userMapper.insert(user)>0?"success":"failed");
+        return baseResultRsp;
     }
 }
