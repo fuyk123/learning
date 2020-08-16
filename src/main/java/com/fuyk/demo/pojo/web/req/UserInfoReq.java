@@ -5,5 +5,5 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
 public class UserInfoReq {
-    private Integer id;
+    private String name;
 }

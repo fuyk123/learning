@@ -1,5 +1,6 @@
 package com.fuyk.demo.controller;
 
+import com.fuyk.demo.pojo.web.req.UserInfoReq;
 import com.fuyk.demo.pojo.web.rsp.UserInfoRsp;
 import com.fuyk.demo.service.UserInfoService;
 import org.springframework.web.bind.annotation.*;
@@ -22,4 +23,8 @@ public class MainController {
         return userInfoService.queryUserInfo(id);
     }
 
+    @PostMapping("/queryUserInfoByName")
+    public UserInfoRsp queryUserInfoByName(@RequestBody UserInfoReq userInfoReq){
+        return userInfoService.queryUserInfoByName(userInfoReq.getName());
+    }
 }

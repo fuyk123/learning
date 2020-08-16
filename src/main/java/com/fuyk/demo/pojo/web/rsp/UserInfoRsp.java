@@ -6,8 +6,10 @@ import lombok.Data;
 @Builder
 @Data
 public class UserInfoRsp {
+    private String errmsg;
     private Integer id;
     private String name;
     private String sex;
     private Boolean isLocal;
+
 }

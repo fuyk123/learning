@@ -2,18 +2,56 @@ package com.fuyk.demo.service.impl;
 
 import com.fuyk.demo.pojo.web.rsp.UserInfoRsp;
 import com.fuyk.demo.service.UserInfoService;
+import com.fuyk.demo.sqlservice.dao.UserMapper;
+import com.fuyk.demo.sqlservice.domain.User;
+import com.fuyk.demo.sqlservice.domain.UserQuery;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
+    @Resource
+    UserMapper userMapper;
+
     @Override
     public UserInfoRsp queryUserInfo(Integer id){
+        User user = userMapper.selectByPrimaryKey(id);
+        if (user != null) {
+            UserInfoRsp userInfoRsp = UserInfoRsp.builder()
+                    .id(user.getId())
+                    .name(user.getUserName())
+                    .sex(user.getSex())
+                    .isLocal((user.getLocal() == 1 ? true : false))
+                    .errmsg("success")
+                    .build();
+            return userInfoRsp;
+        }
+        else{
+            UserInfoRsp userInfoRsp = UserInfoRsp.builder()
+                    .id(null)
+                    .name(null)
+                    .sex(null)
+                    .isLocal(null)
+                    .errmsg("无此id")
+                    .build();
+            return userInfoRsp;
+        }
+    }
+
+    @Override
+    public UserInfoRsp queryUserInfoByName(String name){
+        UserQuery userQuery = new UserQuery();
+        UserQuery.Criteria criteria = userQuery.createCriteria();
+        criteria.andUserNameEqualTo(name);
+        List<User> userList = userMapper.selectByExample(userQuery);
         UserInfoRsp userInfoRsp = UserInfoRsp.builder()
-                .id(5)
-                .name("傅宇康")
-                .sex("男")
-                .isLocal(true)
+                .id(userList.get(0).getId())
+                .name(userList.get(0).getUserName())
+                .sex(userList.get(0).getSex())
+                .isLocal((userList.get(0).getLocal() ==1?true:false))
                 .build();
-         return userInfoRsp;
+        return userInfoRsp;
     }
 }
