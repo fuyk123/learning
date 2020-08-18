@@ -35,7 +35,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
                     //页面标题
                     .title("Spring Boot 使用 Swagger2 构建RESTful API")
                     //创建人
-                    .contact(new Contact("Bryan", "http://blog.bianxh.top/", ""))
+                    .contact(new Contact("Fuyk", "", "fuyk1996@163.com"))
                     //版本号
                     .version("1.0")
                     //描述
