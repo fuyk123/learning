@@ -1,5 +1,6 @@
 package com.fuyk.demo.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fuyk.demo.pojo.web.req.AddUserInfoReq;
 import com.fuyk.demo.pojo.web.rsp.BaseResultRsp;
 import com.fuyk.demo.pojo.web.rsp.UserInfoListRsp;
@@ -8,6 +9,7 @@ import com.fuyk.demo.service.UserInfoService;
 import com.fuyk.demo.sqlservice.dao.UserMapper;
 import com.fuyk.demo.sqlservice.domain.User;
 import com.fuyk.demo.sqlservice.domain.UserQuery;
+import com.fuyk.demo.util.LogUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -47,7 +49,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public PageInfo<User> queryUserInfoByName(String name, Integer pageNo, Integer pageSize){
+    public PageInfo<User> queryUserInfoByName(String name, Integer pageNo, Integer pageSize) throws JsonProcessingException {
         UserQuery userQuery = new UserQuery();
         UserQuery.Criteria criteria = userQuery.createCriteria();
         criteria.andUserNameEqualTo(name);
@@ -56,6 +58,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         List<User> userList = userMapper.selectByExample(userQuery);
         //结果集放到PageInfo<T> 泛型集合类中
         PageInfo<User> pageInfo = new PageInfo<>(userList);
+        //打印返回参数
+        LogUtil.logUtil(pageInfo,1);
         return pageInfo;
     }
 

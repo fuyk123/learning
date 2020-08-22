@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class UserInfoReq {
-    @NotBlank
+    @NotBlank(message = "name不能为空")
     private String name;
     private Integer limit;
     private Integer pageNo;
