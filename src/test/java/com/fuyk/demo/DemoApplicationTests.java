@@ -20,14 +20,18 @@ class DemoApplicationTests {
     public void jacksonTest() throws JsonProcessingException {
         Map map = new HashMap<>();
         map.put("name", "fuyk");
+        Employee employee = new Employee();
+        employee.setAge(24);
         //new 一个Jackson 对象
         ObjectMapper objectMapper = new ObjectMapper();
-        //序列化对象
-        String jsonString = objectMapper.writeValueAsString(map);
-        System.out.println(jsonString);
-        //反序列化成对象
-        Map map1 = objectMapper.readValue(jsonString,Map.class);
-        System.out.println(map1.get("name"));
+        //序列化对象,write
+        String jsonString1 = objectMapper.writeValueAsString(map);
+        String jsonString2 = objectMapper.writeValueAsString(employee);
+        System.out.println(jsonString2);
+        //反序列化成对象,read
+        Map map2 = objectMapper.readValue(jsonString1,Map.class);
+        Employee employee2 = objectMapper.readValue(jsonString2,Employee.class);
+        System.out.println(employee.getAge());
 
 
     }

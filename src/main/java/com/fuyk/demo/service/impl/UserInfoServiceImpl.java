@@ -2,15 +2,19 @@ package com.fuyk.demo.service.impl;
 
 import com.fuyk.demo.pojo.web.req.AddUserInfoReq;
 import com.fuyk.demo.pojo.web.rsp.BaseResultRsp;
+import com.fuyk.demo.pojo.web.rsp.UserInfoListRsp;
 import com.fuyk.demo.pojo.web.rsp.UserInfoRsp;
 import com.fuyk.demo.service.UserInfoService;
 import com.fuyk.demo.sqlservice.dao.UserMapper;
 import com.fuyk.demo.sqlservice.domain.User;
 import com.fuyk.demo.sqlservice.domain.UserQuery;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
@@ -43,18 +47,55 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public UserInfoRsp queryUserInfoByName(String name){
+    public PageInfo<User> queryUserInfoByName(String name, Integer pageNo, Integer pageSize){
         UserQuery userQuery = new UserQuery();
         UserQuery.Criteria criteria = userQuery.createCriteria();
         criteria.andUserNameEqualTo(name);
+        //PageHelper类的使用
+        PageHelper.startPage(pageNo,pageSize);
         List<User> userList = userMapper.selectByExample(userQuery);
-        UserInfoRsp userInfoRsp = UserInfoRsp.builder()
-                .id(userList.get(0).getId())
-                .name(userList.get(0).getUserName())
-                .sex(userList.get(0).getSex())
-                .isLocal((userList.get(0).getLocal() ==1?true:false))
-                .build();
-        return userInfoRsp;
+        //结果集放到PageInfo<T> 泛型集合类中
+        PageInfo<User> pageInfo = new PageInfo<>(userList);
+        return pageInfo;
+    }
+
+    @Override
+    public UserInfoListRsp queryUserInfoByNameLimit(String name,Integer limit){
+        UserQuery userQuery = new UserQuery();
+        userQuery.setLimitNum(limit);
+        UserQuery.Criteria criteria = userQuery.createCriteria();
+        criteria.andUserNameEqualTo(name);
+        List<User> userList = userMapper.selectByExampleLimit(userQuery);
+        UserInfoListRsp userInfoListRsp = new UserInfoListRsp();
+        userInfoListRsp.setUserInfoRspList(
+                userList.stream().map(userInfo ->UserInfoRsp.builder().
+                        id(userInfo.getId())
+                        .isLocal(userInfo.getLocal()==1?true:false)
+                        .sex(userInfo.getSex())
+                        .name(userInfo.getUserName())
+                        .build()).collect(Collectors.toList())
+        );
+        return userInfoListRsp;
+    }
+
+    public UserInfoListRsp queryUserInfoByNamePage(String name,Integer pageNo,Integer pageSize){
+        UserQuery userQuery = new UserQuery();
+        userQuery.setLimitFront((pageNo-1)*pageSize);
+        userQuery.setLimitAfter(pageSize);
+        UserQuery.Criteria criteria = userQuery.createCriteria();
+        criteria.andUserNameEqualTo(name);
+        List<User> userList = userMapper.selectByExamplePage(userQuery);
+        //这个波浪线表示下面代码重复，建议提出为一个公共method
+        UserInfoListRsp userInfoListRsp = new UserInfoListRsp();
+        userInfoListRsp.setUserInfoRspList(
+                userList.stream().map(userInfo ->UserInfoRsp.builder().
+                        id(userInfo.getId())
+                        .isLocal(userInfo.getLocal()==1?true:false)
+                        .sex(userInfo.getSex())
+                        .name(userInfo.getUserName())
+                        .build()).collect(Collectors.toList())
+        );
+        return userInfoListRsp;
     }
 
     @Override

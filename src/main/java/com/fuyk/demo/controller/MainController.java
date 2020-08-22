@@ -3,8 +3,10 @@ package com.fuyk.demo.controller;
 import com.fuyk.demo.pojo.web.req.AddUserInfoReq;
 import com.fuyk.demo.pojo.web.req.UserInfoReq;
 import com.fuyk.demo.pojo.web.rsp.BaseResultRsp;
+import com.fuyk.demo.pojo.web.rsp.UserInfoListRsp;
 import com.fuyk.demo.pojo.web.rsp.UserInfoRsp;
 import com.fuyk.demo.service.UserInfoService;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,8 +33,17 @@ public class MainController {
     }
 
     @PostMapping("/queryUserInfoByName")
-    public UserInfoRsp queryUserInfoByName(@RequestBody UserInfoReq userInfoReq){
-        return userInfoService.queryUserInfoByName(userInfoReq.getName());
+    public PageInfo queryUserInfoByName(@RequestBody UserInfoReq userInfoReq){
+        return userInfoService.queryUserInfoByName(userInfoReq.getName(),userInfoReq.getPageNo(),userInfoReq.getPageSize());
+    }
+
+    @PostMapping("/queryUserInfoByNameLimit")
+    public UserInfoListRsp queryUserInfoByNameLimit(@RequestBody UserInfoReq userInfoReq){
+        return userInfoService.queryUserInfoByNameLimit(userInfoReq.getName(),userInfoReq.getLimit());
+    }
+    @PostMapping("/queryUserInfoByNamePage")
+    public UserInfoListRsp queryUserInfoByNamePage(@RequestBody UserInfoReq userInfoReq){
+        return userInfoService.queryUserInfoByNamePage(userInfoReq.getName(),userInfoReq.getPageNo(),userInfoReq.getPageSize());
     }
 
     @PostMapping("/addUserInfo")

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserQuery {
+    protected Integer limitNum;
+
+    protected Integer limitFront;
+    protected  Integer limitAfter;
     protected String orderByClause;
 
     protected boolean distinct;
@@ -28,6 +32,29 @@ public class UserQuery {
 
     public boolean isDistinct() {
         return distinct;
+    }
+
+    public void setLimitNum(Integer limitNum) {
+        this.limitNum = limitNum;
+    }
+
+    public Integer getLimitNum() {
+        return limitNum;
+    }
+    public Integer getLimitFront(){
+        return this.limitFront;
+    }
+
+    public Integer getLimitAfter() {
+        return limitAfter;
+    }
+
+    public void setLimitFront(Integer limitFront) {
+        this.limitFront = limitFront;
+    }
+
+    public void setLimitAfter(Integer limitAfter) {
+        this.limitAfter = limitAfter;
     }
 
     public List<Criteria> getOredCriteria() {

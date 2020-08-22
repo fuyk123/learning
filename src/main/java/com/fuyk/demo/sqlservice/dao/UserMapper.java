@@ -17,6 +17,8 @@ public interface UserMapper {
     int insertSelective(User record);
 
     List<User> selectByExample(UserQuery example);
+    List<User> selectByExampleLimit(UserQuery example);
+    List<User> selectByExamplePage(UserQuery example);
 
     User selectByPrimaryKey(Integer id);
 

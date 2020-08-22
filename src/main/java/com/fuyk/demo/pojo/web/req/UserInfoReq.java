@@ -10,4 +10,7 @@ import javax.validation.constraints.NotBlank;
 public class UserInfoReq {
     @NotBlank
     private String name;
+    private Integer limit;
+    private Integer pageNo;
+    private Integer pageSize;
 }
