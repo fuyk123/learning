@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 
 public interface  UserInfoService {
     public UserInfoRsp queryUserInfo(Integer id);
+    public UserInfoRsp queryUserInfoByPath(Integer id);
     public PageInfo queryUserInfoByName(String name, Integer pageNo, Integer pageSize) throws JsonProcessingException;
     public UserInfoListRsp queryUserInfoByNameLimit(String name , Integer limit);
     public UserInfoListRsp queryUserInfoByNamePage(String name,Integer pageNo,Integer pageSize);

@@ -20,12 +20,12 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/test")
+@RequestMapping(value = "/user")
 @Api("User信息")
 public class MainController {
 
     @Resource
-    UserInfoService userInfoService;
+    private UserInfoService userInfoService;
     /**
      * @RestController           相当于 @Controller + @ResponseBody
      * @GetMapping("/hello") 相当于 @RequestMapping(value = "/hello",method = RequestMethod.GET)
@@ -34,6 +34,12 @@ public class MainController {
     @GetMapping("/queryUserInfo")
     @ApiOperation(value = "查询User信息", notes = "返回请求里的message", response = UserInfoRsp.class)
     public UserInfoRsp queryUserInfo(@RequestParam(value = "id") Integer id) {
+        return userInfoService.queryUserInfo(id);
+    }
+    @GetMapping("/queryUserInfoByPath/{id}")
+    @ApiOperation(value = "查询User信息", notes = "返回请求里的message", response = UserInfoRsp.class)
+    //@PathVariable注解拿url里的占位符参数，和get请求还是不一样的，get是?
+    public UserInfoRsp queryUserInfoByPath(@PathVariable Integer id) {
         return userInfoService.queryUserInfo(id);
     }
 

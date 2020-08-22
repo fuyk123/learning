@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
     @Resource
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Override
     public UserInfoRsp queryUserInfo(Integer id){
@@ -46,6 +46,10 @@ public class UserInfoServiceImpl implements UserInfoService {
                     .build();
             return userInfoRsp;
         }
+    }
+    @Override
+    public UserInfoRsp queryUserInfoByPath(Integer id){
+        return queryUserInfo(id);
     }
 
     @Override
@@ -104,6 +108,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public BaseResultRsp addUserInfo(AddUserInfoReq addUserInfoReq){
+        //1、
         BaseResultRsp baseResultRsp = new BaseResultRsp();
         User user = new User();
         user.setUserName(addUserInfoReq.getUserName());
