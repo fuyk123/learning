@@ -44,8 +44,7 @@ public class MainController {
     }
 
     @PostMapping("/queryUserInfoByName")
-    public PageInfo queryUserInfoByName(@Valid @RequestBody UserInfoReq userInfoReq) throws JsonProcessingException {
-        LogUtil.logUtil(userInfoReq,0);
+    public PageInfo queryUserInfoByName(@Valid @RequestBody UserInfoReq userInfoReq) {
         return userInfoService.queryUserInfoByName(userInfoReq.getName(),userInfoReq.getPageNo(),userInfoReq.getPageSize());
     }
 

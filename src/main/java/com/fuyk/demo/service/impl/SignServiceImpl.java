@@ -20,6 +20,7 @@ public class SignServiceImpl implements SignService {
         String userKey = "LOGIN_TEST_"+userId.toString();
         String sessionKeyNew = userKey + "_" + uuid;
         Set<String> set = redisTemplate.keys("*" + userKey + "*");
+        //key已存在 先删后增
         if (!set.isEmpty()){
             for(String sessionKeyOld : set){
                 redisTemplate.delete(sessionKeyOld);
@@ -33,6 +34,7 @@ public class SignServiceImpl implements SignService {
     @Override
     public BaseResultRsp logout(String session){
         Set<String> set = redisTemplate.keys("*"+session);
+        //key存在，则删除
         for(String sessionKey : set){
             redisTemplate.delete(sessionKey);
         }

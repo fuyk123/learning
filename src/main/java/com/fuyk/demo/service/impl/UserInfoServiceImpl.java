@@ -53,7 +53,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public PageInfo<User> queryUserInfoByName(String name, Integer pageNo, Integer pageSize) throws JsonProcessingException {
+    public PageInfo<User> queryUserInfoByName(String name, Integer pageNo, Integer pageSize)  {
         UserQuery userQuery = new UserQuery();
         UserQuery.Criteria criteria = userQuery.createCriteria();
         criteria.andUserNameEqualTo(name);
@@ -63,7 +63,6 @@ public class UserInfoServiceImpl implements UserInfoService {
         //结果集放到PageInfo<T> 泛型集合类中
         PageInfo<User> pageInfo = new PageInfo<>(userList);
         //打印返回参数
-        LogUtil.logUtil(pageInfo,1);
         return pageInfo;
     }
 

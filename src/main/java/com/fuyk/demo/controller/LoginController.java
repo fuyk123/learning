@@ -23,12 +23,11 @@ import java.util.UUID;
 @RequestMapping(value = "/sign")
 @Api("登录、登出")
 public class LoginController {
-    @Resource
+    @Autowired
     private SignService signService;
 
     @PostMapping("/login")
     public ResponseEntity<BaseResultRsp> login(@Valid @RequestBody LoginReq loginReq) throws JsonProcessingException {
-        LogUtil.logUtil(loginReq,0);
         String uuid = String.valueOf(UUID.randomUUID()).replaceAll("-","");
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Cookie", "JSESSIONID=" + uuid);
@@ -36,7 +35,7 @@ public class LoginController {
     }
     @PostMapping("/logout")
     public BaseResultRsp logout(@RequestHeader Map<String,String> cookieMap) throws JsonProcessingException {
-        LogUtil.logUtil("{}",0);
+        //LogUtil.logUtil("{}",0);
         String session = cookieMap.get("cookie").replaceAll("JSESSIONID=","");
         return signService.logout(session);
     }
