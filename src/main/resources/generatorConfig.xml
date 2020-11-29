@@ -66,5 +66,9 @@
             <columnOverride column="sex" javaType="java.lang.String" jdbcType="VARCHAR" />
         </table>
 
+        <table tableName="event_property_mapping">
+            <generatedKey column="id" sqlStatement="Mysql" type="post" identity="true"/>
+        </table>
+
     </context>
 </generatorConfiguration>

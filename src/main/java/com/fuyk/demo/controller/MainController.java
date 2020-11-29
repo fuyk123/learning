@@ -27,7 +27,7 @@ public class MainController {
     @Resource
     private UserInfoService userInfoService;
     /**
-     * @RestController           相当于 @Controller + @ResponseBody
+     * @RestController           相当于 @Controller + @ResponseBody,应答直接序列化之后给出去
      * @GetMapping("/hello") 相当于 @RequestMapping(value = "/hello",method = RequestMethod.GET)
      * @return
      */

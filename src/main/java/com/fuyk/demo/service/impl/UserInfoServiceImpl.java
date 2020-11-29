@@ -12,6 +12,7 @@ import com.fuyk.demo.sqlservice.domain.UserQuery;
 import com.fuyk.demo.util.LogUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
-    @Resource
+    @Autowired(required = false)
     private UserMapper userMapper;
 
     @Override

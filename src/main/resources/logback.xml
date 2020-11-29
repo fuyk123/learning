@@ -10,7 +10,7 @@
 
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
     <property name="LOG_HOME" value="E:/学习计划/demo/logs" />
-
+    <!--property name="LOG_HOME" value="/root/logs" /-->
     <!--控制台日志， 控制台输出 -->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
